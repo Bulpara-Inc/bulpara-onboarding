@@ -13,7 +13,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -102,15 +101,7 @@ fun OnboardingScreen(
                     )
                 }
 
-                TextButton(onClick = onComplete) {
-                    Text(
-                        text = "Skip",
-                        color = config.branding.skipTextColor,
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(Spacing.md))
+                Spacer(modifier = Modifier.height(48.dp))
             }
         } else {
             // Paywall page (last page)
