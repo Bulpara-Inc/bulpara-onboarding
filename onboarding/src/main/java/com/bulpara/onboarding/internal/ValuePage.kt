@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -33,16 +32,14 @@ internal fun ValuePage(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(branding.backgroundColor),
+        modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        // Top: gradient + icon circle (fixed 45% of screen)
+        // Gradient + icon circle
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(0.45f)
+                .height(320.dp)
                 .background(Brush.linearGradient(page.gradientColors)),
             contentAlignment = Alignment.Center,
         ) {
@@ -62,32 +59,27 @@ internal fun ValuePage(
             }
         }
 
-        // Bottom: title + subtitle (remaining 55%)
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(0.55f)
-                .padding(horizontal = Spacing.xl)
-                .padding(top = Spacing.xl),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Text(
-                text = page.title,
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold,
-                color = branding.titleColor,
-                textAlign = TextAlign.Center,
-            )
+        // Title + subtitle
+        Spacer(modifier = Modifier.height(Spacing.xl))
 
-            Spacer(modifier = Modifier.height(Spacing.md))
+        Text(
+            text = page.title,
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.Bold,
+            color = branding.titleColor,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(horizontal = Spacing.xl),
+        )
 
-            Text(
-                text = page.subtitle,
-                style = MaterialTheme.typography.bodyLarge,
-                color = branding.subtitleColor,
-                textAlign = TextAlign.Center,
-                lineHeight = 24.sp,
-            )
-        }
+        Spacer(modifier = Modifier.height(Spacing.md))
+
+        Text(
+            text = page.subtitle,
+            style = MaterialTheme.typography.bodyLarge,
+            color = branding.subtitleColor,
+            textAlign = TextAlign.Center,
+            lineHeight = 24.sp,
+            modifier = Modifier.padding(horizontal = Spacing.xl),
+        )
     }
 }

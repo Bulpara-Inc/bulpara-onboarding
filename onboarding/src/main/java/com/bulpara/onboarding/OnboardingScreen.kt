@@ -61,58 +61,56 @@ fun OnboardingScreen(
                 ValuePage(
                     page = page,
                     branding = config.branding,
-                    modifier = Modifier.weight(1f),
                 )
 
-                // Controls at bottom
-                Column(
+                // Push controls to bottom
+                Spacer(modifier = Modifier.weight(1f))
+
+                // Controls
+                PageIndicator(
+                    pageCount = config.pages.size,
+                    currentPage = pageIndex,
+                    activeColor = accentColor,
+                    inactiveColor = config.branding.dotInactiveColor,
+                )
+
+                Spacer(modifier = Modifier.height(Spacing.lg))
+
+                Button(
+                    onClick = {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(pageIndex + 1)
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = Spacing.xl)
-                        .padding(bottom = 32.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                        .height(52.dp)
+                        .padding(horizontal = Spacing.xl),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.White,
+                        contentColor = accentColor,
+                    ),
+                    shape = MaterialTheme.shapes.medium,
+                    elevation = ButtonDefaults.buttonElevation(
+                        defaultElevation = 2.dp,
+                    ),
                 ) {
-                    PageIndicator(
-                        pageCount = config.pages.size,
-                        currentPage = pageIndex,
-                        activeColor = accentColor,
-                        inactiveColor = config.branding.dotInactiveColor,
+                    Text(
+                        text = "Next",
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.SemiBold,
                     )
-
-                    Spacer(modifier = Modifier.height(Spacing.lg))
-
-                    Button(
-                        onClick = {
-                            coroutineScope.launch {
-                                pagerState.animateScrollToPage(pageIndex + 1)
-                            }
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(52.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = accentColor,
-                            contentColor = Color.White,
-                        ),
-                        shape = MaterialTheme.shapes.medium,
-                    ) {
-                        Text(
-                            text = "Next",
-                            style = MaterialTheme.typography.bodyLarge,
-                            fontWeight = FontWeight.SemiBold,
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(Spacing.xs))
-
-                    TextButton(onClick = onComplete) {
-                        Text(
-                            text = "Skip",
-                            color = config.branding.skipTextColor,
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    }
                 }
+
+                TextButton(onClick = onComplete) {
+                    Text(
+                        text = "Skip",
+                        color = config.branding.skipTextColor,
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(Spacing.md))
             }
         } else {
             // Paywall page (last page)
