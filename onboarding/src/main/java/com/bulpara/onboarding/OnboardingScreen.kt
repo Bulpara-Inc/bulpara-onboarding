@@ -1,7 +1,6 @@
 package com.bulpara.onboarding
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -46,27 +45,31 @@ fun OnboardingScreen(
     HorizontalPager(
         state = pagerState,
         modifier = modifier.fillMaxSize(),
-        userScrollEnabled = false,
+        userScrollEnabled = true,
     ) { pageIndex ->
         if (pageIndex < config.pages.size) {
-            // Value page
             val page = config.pages[pageIndex]
             val accentColor = page.gradientColors.firstOrNull() ?: Color(0xFF6200EE)
 
-            Box(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(config.branding.backgroundColor),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                // Value page content (gradient + icon + title + subtitle)
                 ValuePage(
                     page = page,
                     branding = config.branding,
+                    modifier = Modifier.weight(1f),
                 )
 
-                // Bottom controls overlay
+                // Controls at bottom
                 Column(
                     modifier = Modifier
-                        .align(Alignment.BottomCenter)
                         .fillMaxWidth()
-                        .background(config.branding.backgroundColor)
                         .padding(horizontal = Spacing.xl)
-                        .padding(bottom = 40.dp),
+                        .padding(bottom = 32.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     PageIndicator(
@@ -84,7 +87,9 @@ fun OnboardingScreen(
                                 pagerState.animateScrollToPage(pageIndex + 1)
                             }
                         },
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(52.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = accentColor,
                             contentColor = Color.White,
@@ -95,11 +100,10 @@ fun OnboardingScreen(
                             text = "Next",
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.SemiBold,
-                            modifier = Modifier.padding(vertical = Spacing.sm),
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(Spacing.sm))
+                    Spacer(modifier = Modifier.height(Spacing.xs))
 
                     TextButton(onClick = onComplete) {
                         Text(

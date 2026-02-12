@@ -1,7 +1,6 @@
 package com.bulpara.onboarding.internal
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,6 +21,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.bulpara.onboarding.OnboardingBranding
 import com.bulpara.onboarding.OnboardingPage
 
@@ -35,12 +36,13 @@ internal fun ValuePage(
         modifier = modifier
             .fillMaxSize()
             .background(branding.backgroundColor),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        // Top half: gradient + icon circle
+        // Top: gradient + icon circle (fixed 45% of screen)
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(1f)
+                .weight(0.45f)
                 .background(Brush.linearGradient(page.gradientColors)),
             contentAlignment = Alignment.Center,
         ) {
@@ -60,17 +62,18 @@ internal fun ValuePage(
             }
         }
 
-        // Bottom half: title + subtitle
+        // Bottom: title + subtitle (remaining 55%)
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = Spacing.xl, vertical = Spacing.lg),
+                .weight(0.55f)
+                .padding(horizontal = Spacing.xl)
+                .padding(top = Spacing.xl),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top,
         ) {
             Text(
                 text = page.title,
-                style = MaterialTheme.typography.headlineSmall,
+                style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
                 color = branding.titleColor,
                 textAlign = TextAlign.Center,
@@ -83,6 +86,7 @@ internal fun ValuePage(
                 style = MaterialTheme.typography.bodyLarge,
                 color = branding.subtitleColor,
                 textAlign = TextAlign.Center,
+                lineHeight = 24.sp,
             )
         }
     }
