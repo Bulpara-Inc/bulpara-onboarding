@@ -1,0 +1,70 @@
+plugins {
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
+    `maven-publish`
+}
+
+android {
+    namespace = "com.bulpara.onboarding"
+    compileSdk = 35
+
+    defaultConfig {
+        minSdk = 26
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+    buildFeatures {
+        compose = true
+    }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            register<MavenPublication>("release") {
+                groupId = "com.bulpara"
+                artifactId = "onboarding"
+                version = "1.0.0"
+
+                from(components["release"])
+            }
+        }
+    }
+}
+
+dependencies {
+    // Compose + Material 3
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons.extended)
+
+    // Lifecycle ViewModel
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    // Bulpara Paywall (for PaywallScreen on last page)
+    api(libs.bulpara.paywall)
+}
