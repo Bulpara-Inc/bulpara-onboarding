@@ -23,4 +23,6 @@ data class OnboardingBranding(
     val subtitleColor: Color = Color(0xFF6B6360),
     val skipTextColor: Color = Color(0xFF9E9490),
     val dotInactiveColor: Color = Color(0xFFD4C8C0),
+    val buttonContainerColor: Color = Color.White,
+    val buttonContentColor: Color = Color.Unspecified,
 )

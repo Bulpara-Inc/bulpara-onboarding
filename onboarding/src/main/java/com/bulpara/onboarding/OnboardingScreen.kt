@@ -48,7 +48,7 @@ fun OnboardingScreen(
     ) { pageIndex ->
         if (pageIndex < config.pages.size) {
             val page = config.pages[pageIndex]
-            val accentColor = page.gradientColors.firstOrNull() ?: Color(0xFF6200EE)
+            val accentColor = page.gradientColors.lastOrNull() ?: Color(0xFF6200EE)
 
             Column(
                 modifier = Modifier
@@ -86,8 +86,12 @@ fun OnboardingScreen(
                         .height(52.dp)
                         .padding(horizontal = Spacing.xl),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.White,
-                        contentColor = accentColor,
+                        containerColor = config.branding.buttonContainerColor,
+                        contentColor = if (config.branding.buttonContentColor == Color.Unspecified) {
+                            accentColor
+                        } else {
+                            config.branding.buttonContentColor
+                        },
                     ),
                     shape = MaterialTheme.shapes.medium,
                     elevation = ButtonDefaults.buttonElevation(
