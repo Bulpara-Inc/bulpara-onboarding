@@ -25,6 +25,8 @@ import com.bulpara.paywall.BillingManager
 import com.bulpara.paywall.PaywallEntryPoint
 import com.bulpara.paywall.PaywallScreen
 import com.bulpara.paywall.PaywallViewModel
+import com.bulpara.paywall.TieredPaywallScreen
+import com.bulpara.paywall.TieredPaywallViewModel
 import com.bulpara.onboarding.internal.PageIndicator
 import com.bulpara.onboarding.internal.Spacing
 import com.bulpara.onboarding.internal.ValuePage
@@ -37,7 +39,8 @@ fun OnboardingScreen(
     onComplete: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val totalPages = config.pages.size + 1 // value pages + paywall
+    val hasPaywall = config.tieredPaywallConfig != null || config.paywallConfig != null
+    val totalPages = config.pages.size + if (hasPaywall) 1 else 0
     val pagerState = rememberPagerState(pageCount = { totalPages })
     val coroutineScope = rememberCoroutineScope()
 
@@ -107,8 +110,19 @@ fun OnboardingScreen(
 
                 Spacer(modifier = Modifier.height(48.dp))
             }
-        } else {
-            // Paywall page (last page)
+        } else if (config.tieredPaywallConfig != null) {
+            val tieredViewModel = viewModel<TieredPaywallViewModel>(
+                factory = PaywallEntryPoint.createTieredViewModelFactory(
+                    billingManager = billingManager,
+                    config = config.tieredPaywallConfig,
+                ),
+            )
+            TieredPaywallScreen(
+                config = config.tieredPaywallConfig,
+                viewModel = tieredViewModel,
+                onDismiss = onComplete,
+            )
+        } else if (config.paywallConfig != null) {
             val paywallViewModel = viewModel<PaywallViewModel>(
                 factory = PaywallEntryPoint.createViewModelFactory(
                     billingManager = billingManager,

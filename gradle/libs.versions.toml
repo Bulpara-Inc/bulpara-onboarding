@@ -4,7 +4,7 @@ kotlin = "2.0.21"
 composeBom = "2024.12.01"
 lifecycleRuntimeKtx = "2.8.7"
 billingKtx = "7.1.1"
-bulparaPaywall = "v1.0.8"
+bulparaPaywall = "2.1.0"
 
 [libraries]
 # Compose BOM
@@ -22,7 +22,7 @@ androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "l
 billing-ktx = { group = "com.android.billingclient", name = "billing-ktx", version.ref = "billingKtx" }
 
 # Bulpara Paywall
-bulpara-paywall = { group = "com.github.Bulpara-Inc", name = "bulpara-paywall", version.ref = "bulparaPaywall" }
+bulpara-paywall = { group = "com.bulpara", name = "paywall", version.ref = "bulparaPaywall" }
 
 [plugins]
 android-library = { id = "com.android.library", version.ref = "agp" }

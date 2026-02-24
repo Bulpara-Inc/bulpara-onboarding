@@ -45,7 +45,7 @@ afterEvaluate {
             register<MavenPublication>("release") {
                 groupId = "com.bulpara"
                 artifactId = "onboarding"
-                version = "1.0.7"
+                version = "1.1.0"
 
                 from(components["release"])
             }

@@ -3,11 +3,13 @@ package com.bulpara.onboarding
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.bulpara.paywall.PaywallConfig
+import com.bulpara.paywall.TieredPaywallConfig
 
 data class OnboardingConfig(
     val pages: List<OnboardingPage>,
     val branding: OnboardingBranding = OnboardingBranding(),
-    val paywallConfig: PaywallConfig,
+    val paywallConfig: PaywallConfig? = null,
+    val tieredPaywallConfig: TieredPaywallConfig? = null,
 )
 
 data class OnboardingPage(
